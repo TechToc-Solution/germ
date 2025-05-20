@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "874179927551",
+    "firebase_url": "https://germac-eeb64-default-rtdb.firebaseio.com",
+    "project_id": "germac-eeb64",
+    "storage_bucket": "germac-eeb64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874179927551:android:21c14b8175d5cd0bd0dbca",
+        "android_client_info": {
+          "package_name": "com.example.GermAc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874179927551-a8ca521j3vr52ofg4tfefebk84bilods.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-6137NUTiH6jMspMuxY8Z0_aHUhCK3lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874179927551-a8ca521j3vr52ofg4tfefebk84bilods.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

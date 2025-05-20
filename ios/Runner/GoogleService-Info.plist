@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAFqK_9ikI2MwPSklML6IKewYorsFe1aEM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>874179927551</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.coursesApp</string>
+	<key>PROJECT_ID</key>
+	<string>germac-eeb64</string>
+	<key>STORAGE_BUCKET</key>
+	<string>germac-eeb64.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:874179927551:ios:cac08251dd208199d0dbca</string>
+	<key>DATABASE_URL</key>
+	<string>https://germac-eeb64-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
