@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   flutter_screenutil: ^5.9.0
   provider: ^6.1.2
   shared_preferences: ^2.2.2
@@ -26,12 +26,17 @@ dependencies:
   cached_network_image: ^3.3.1
   one_context: ^4.0.0
   top_snackbar_flutter: ^3.1.0
-  flutter_local_notifications: ^17.0.0
+  flutter_local_notifications: ^19.2.1
   font_awesome_flutter: ^10.7.0
   firebase_database: ^10.5.0
   flutter_tts: ^4.0.2
   url_launcher: ^6.1.11
   marquee: ^2.2.3
+  firebase_core: ^2.32.0
+
+dependency_overrides:
+  win32: 5.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

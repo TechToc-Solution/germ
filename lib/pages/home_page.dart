@@ -11,7 +11,7 @@ import 'package:GermAc/widgets/navigation_drawer.dart';
 import 'package:GermAc/widgets/services_card.dart';
 import 'package:GermAc/widgets/top_courses_card.dart';
 import 'package:GermAc/providers/home_provider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
@@ -80,8 +80,8 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CarouselSlider(
-                  options: CarouselOptions(
+                cs.CarouselSlider(
+                  options: cs.CarouselOptions(
                     height: 150,
                     aspectRatio: 16 / 9,
                     initialPage: 0,
@@ -256,8 +256,8 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w800,
                       color: HEADING_COLOR),
                 ),
-                CarouselSlider(
-                  options: CarouselOptions(
+                cs.CarouselSlider(
+                  options: cs.CarouselOptions(
                     height: MediaQuery.of(context).size.height / 3,
                     aspectRatio: 16 / 9,
                     initialPage: 0,

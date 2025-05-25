@@ -5,7 +5,7 @@ import 'package:GermAc/core/ustils.dart';
 import 'package:GermAc/pages/tourism_request.dart';
 import 'package:GermAc/widgets/medical_tour_button.dart';
 import 'package:GermAc/providers/home_provider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -76,8 +76,8 @@ class _MedicalTourismState extends State<MedicalTourism> {
               const SizedBox(
                 height: 30,
               ),
-              CarouselSlider(
-                options: CarouselOptions(
+              cs.CarouselSlider(
+                options: cs.CarouselOptions(
                   height: 150,
                   aspectRatio: 16 / 9,
                   initialPage: 0,

@@ -2,7 +2,7 @@
 
 import 'package:GermAc/core/constant.dart';
 import 'package:GermAc/providers/home_provider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -74,8 +74,8 @@ class AboutUs extends StatelessWidget {
                 ],
               ),
 
-              CarouselSlider(
-                options: CarouselOptions(
+              cs.CarouselSlider(
+                options: cs.CarouselOptions(
                   height: 200,
                   aspectRatio: 16 / 9,
                   initialPage: 0,
