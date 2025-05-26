@@ -186,5 +186,11 @@
   "please_enter_message": "Please enter your message",
   "partner_form_sent_successfully": "Partner request sent successfully!",
   "network_error": "A network error occurred",
-  "something_went_wrong": "Something went wrong"
+  "something_went_wrong": "Something went wrong",
+  "feedback": "Feedback",
+  "feedback_sent_successfully": "Feedback sent successfully",
+  "please_enter_subject": "Please enter the subject",
+  "phone": "Phone",
+  "subject": "Subject",
+  "message": "Message"
 }

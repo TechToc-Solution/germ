@@ -296,5 +296,10 @@
   "please_enter_message": "يرجى إدخال الرسالة",
   "partner_form_sent_successfully": "تم إرسال طلب الشراكة بنجاح!",
   "network_error": "حدث خطأ في الاتصال",
-  "something_went_wrong": "حدث خطأ ما"
+  "something_went_wrong": "حدث خطأ ما",
+  "feedback": "التغذية الراجعة",
+  "feedback_sent_successfully": "تم إرسال التغذية الراجعة بنجاح",
+  "please_enter_subject": "يرجى إدخال الموضوع",
+  "subject": "الموضوع",
+  "message": "الرسالة"
 }

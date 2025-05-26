@@ -8,6 +8,7 @@ import 'package:GermAc/core/ustils.dart';
 import 'package:GermAc/pages/about_us_page.dart';
 import 'package:GermAc/pages/auth/login.dart';
 import 'package:GermAc/pages/courses_page.dart';
+import 'package:GermAc/pages/feedback_page.dart';
 import 'package:GermAc/pages/home_page.dart';
 import 'package:GermAc/pages/human_side.dart';
 import 'package:GermAc/pages/medical_tourism.dart';
@@ -318,10 +319,10 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                 fontFamily: "Playfair Display",
               ),
             ),
-            onTap: () {
-              launchUrl(Uri.parse("https://germ-ac.com/contact"));
-              //Navigator.of(context).push(Utils.createRoute(const ContactUs()));
-            },
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const FeedbackPage()),
+            ),
           ),
           SharedClass.userId == ''
               ? Container()
