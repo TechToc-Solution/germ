@@ -1,5 +1,6 @@
 import 'package:GermAc/core/constant.dart';
 import 'package:GermAc/core/ustils.dart';
+import 'package:GermAc/pages/auth/ForgotPasswordPage.dart';
 import 'package:GermAc/pages/auth/register.dart';
 import 'package:GermAc/providers/auth_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -133,6 +134,28 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         )
                       ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgotPasswordPage()),
+                          );
+                        },
+                        child: Text(
+                          tr("forgot_password"),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
