@@ -289,5 +289,12 @@
   "reset_token": "رمز إعادة التعيين",
   "confirm_new_password": "تأكيد كلمة المرور الجديدة",
   "password_reset_success": "تمت إعادة تعيين كلمة المرور بنجاح!",
-  "check_email_for_reset_link_or_token": "تحقق من بريدك الإلكتروني للحصول على رابط أو رمز إعادة التعيين."
+  "check_email_for_reset_link_or_token": "تحقق من بريدك الإلكتروني للحصول على رابط أو رمز إعادة التعيين.",
+  "become_a_partner": "كن شريكًا معنا",
+  "partner_intro": "املأ النموذج لتصبح شريكًا معنا.",
+  "please_enter_name": "يرجى إدخال الاسم",
+  "please_enter_message": "يرجى إدخال الرسالة",
+  "partner_form_sent_successfully": "تم إرسال طلب الشراكة بنجاح!",
+  "network_error": "حدث خطأ في الاتصال",
+  "something_went_wrong": "حدث خطأ ما"
 }

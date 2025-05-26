@@ -13,6 +13,7 @@ import 'package:GermAc/pages/human_side.dart';
 import 'package:GermAc/pages/medical_tourism.dart';
 import 'package:GermAc/pages/online_cosulutions.dart';
 import 'package:GermAc/pages/developing_page.dart';
+import 'package:GermAc/pages/partners.dart';
 import 'package:GermAc/pages/sections_page.dart';
 import 'package:GermAc/pages/user_profile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -223,6 +224,20 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
               ));
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.handshake),
+            title: Text(
+              tr("become_a_partner"),
+              style: const TextStyle(
+                fontFamily: "Playfair Display",
+              ),
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const PartnerPage()),
+            ),
+          ),
+
           // ListTile(
           //   leading: const Icon(Icons.chat),
           //   title: const Text('Test Chat'),

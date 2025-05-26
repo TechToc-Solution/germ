@@ -179,6 +179,12 @@
   "reset_token": "Reset Token",
   "confirm_new_password": "Confirm New Password",
   "password_reset_success": "Password reset successful!",
-  "check_email_for_reset_link_or_token": "Check your email for the reset link or token."
-
+  "check_email_for_reset_link_or_token": "Check your email for the reset link or token.",
+  "become_a_partner": "Become a Partner",
+  "partner_intro": "Fill out the form to partner with us.",
+  "please_enter_name": "Please enter your name",
+  "please_enter_message": "Please enter your message",
+  "partner_form_sent_successfully": "Partner request sent successfully!",
+  "network_error": "A network error occurred",
+  "something_went_wrong": "Something went wrong"
 }
