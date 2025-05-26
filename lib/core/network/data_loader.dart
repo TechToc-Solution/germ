@@ -17,7 +17,7 @@ class DataLoader {
   static String allCoursesURL = '$baseUrl/course';
   static String getCourseDetailsURL = '$baseUrl/course/show';
   static String contactURL = '$baseUrl/contact';
-  static String getSectionsURL = '$baseUrl/section';
+  static String getSectionsURL = '$baseUrl/sections';
   static String getSectionDetailsURL = '$baseUrl/section/show';
   static String storeFeedbackURL = '$baseUrl/feedback/store';
   static String bookMedicalTourismURL = '$baseUrl/tourism/store';

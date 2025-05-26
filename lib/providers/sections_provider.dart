@@ -33,7 +33,7 @@ class SectionProvider extends ChangeNotifier {
         await DataLoader.getRequest(url: DataLoader.getSectionsURL);
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
-      List<dynamic> data = response.data?['sections'] ?? [];
+      List<dynamic> data = response.data?['data'] ?? [];
 
       sectionModels = data
           .map<SectionModel>(
