@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:GermAc/core/constant.dart';
 import 'package:GermAc/core/ustils.dart';
 import 'package:GermAc/pages/auth/login.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -20,6 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _conPasswordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   // final TextEditingController _Controller = TextEditingController();
   bool _showPassword = true;
@@ -53,9 +57,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 3.7,
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -176,6 +177,57 @@ class _SignUpPageState extends State<SignUpPage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('con_password'),
+                            style: const TextStyle(
+                              fontFamily: "Playfair Display",
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            controller: _conPasswordController,
+                            obscureText: _showPassword,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return tr('please_enter_your_password');
+                              } else if (value != _passwordController.text) {
+                                return tr('check_your_password');
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _showPassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _showPassword = !_showPassword;
+                                  });
+                                },
+                              ),
+                              // hintText: 'Enter your password',
+                              fillColor: Colors.white,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       TextButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
@@ -189,10 +241,17 @@ class _SignUpPageState extends State<SignUpPage> {
                             } else {
                               _formKey.currentState!.save();
 
+                              String? fcmToken =
+                                  await FirebaseMessaging.instance.getToken();
+
+                              log(fcmToken ?? "");
                               final body = {
                                 'name': _nameController.text.trim(),
                                 'email': _emailController.text.trim(),
-                                'password': _passwordController.text.trim()
+                                'password': _passwordController.text.trim(),
+                                'password_confirmation':
+                                    _conPasswordController.text.trim(),
+                                'fcm_token': fcmToken
                               };
 
                               authProvider.register(context, body);

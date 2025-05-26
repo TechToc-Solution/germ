@@ -33,6 +33,7 @@ dependencies:
   url_launcher: ^6.1.11
   marquee: ^2.2.3
   firebase_core: ^2.32.0
+  firebase_messaging: ^14.7.10
 
 dependency_overrides:
   win32: 5.13.0

@@ -21,6 +21,8 @@
   "profile": "Profile",
   "email": "Email",
   "password": "Password",
+  "con_password": "Confirm Password",
+  "check_your_password": "Check you password",
   "save": "Save",
   "logout": "Logout",
   "login": "Login",
