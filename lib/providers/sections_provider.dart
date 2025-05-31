@@ -53,11 +53,11 @@ class SectionProvider extends ChangeNotifier {
     state = LOADING_STATE;
 
     final response = await DataLoader.getRequest(
-        url: '${DataLoader.getSectionDetailsURL}?section_id=$sectionId');
+        url: '${DataLoader.getSectionDetailsURL}/$sectionId');
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
 
-      final data = response.data?['section'] ?? {};
+      final data = response.data?['data'] ?? {};
 
       sectionDetailsModels = SectionModel.fromMap(data);
       errorMessage = response.message;
@@ -74,11 +74,11 @@ class SectionProvider extends ChangeNotifier {
     state = LOADING_STATE;
 
     final response = await DataLoader.getRequest(
-        url: '${DataLoader.getCourseDetailsURL}?course_id=$courseId');
+        url: '${DataLoader.getCourseDetailsURL}/$courseId');
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
 
-      final data = response.data?['course'] ?? {};
+      final data = response.data?['data'] ?? {};
 
       courseDetails = CourseModel.fromMap(data);
       errorMessage = response.message;
@@ -95,11 +95,11 @@ class SectionProvider extends ChangeNotifier {
     state = LOADING_STATE;
 
     final response = await DataLoader.getRequest(
-        url: '${DataLoader.getDoctorDetailsURL}?doctor_id=$doctorId');
+        url: '${DataLoader.getDoctorDetailsURL}/$doctorId');
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
 
-      final data = response.data?['doctor'] ?? {};
+      final data = response.data?['data'] ?? {};
 
       doctorModel = DoctorModel.fromMap(data);
       errorMessage = response.message;
@@ -120,7 +120,7 @@ class SectionProvider extends ChangeNotifier {
         await DataLoader.getRequest(url: DataLoader.getSectionsURL);
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
-      List<dynamic> data = response.data?['sections'] ?? [];
+      List<dynamic> data = response.data?['data'] ?? [];
 
       sectionModels = data
           .map<SectionModel>(
@@ -141,12 +141,12 @@ class SectionProvider extends ChangeNotifier {
     state = LOADING_STATE;
 
     final response = await DataLoader.getRequest(
-        url: '${DataLoader.getDoctorsInSectionURL}/?section_id=$sectionId');
+        url: '${DataLoader.getDoctorsInSectionURL}/$sectionId');
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
 
       log(response.data.toString());
-      final data = response.data?['doctors'] ?? [];
+      final data = response.data?['data'] ?? [];
 
       doctorModels = data
           .map<DoctorModel>(

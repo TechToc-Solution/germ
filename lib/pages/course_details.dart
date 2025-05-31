@@ -134,8 +134,10 @@ class _CourseDetailsState extends State<CourseDetails> {
                             style: const TextStyle(
                                 fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
-                          buildRatingStars(
-                              double.parse(sectionProvider.courseDetails.rate)),
+                          if (sectionProvider.courseDetails.rate != null)
+                            buildRatingStars(double.tryParse(
+                                    sectionProvider.courseDetails.rate!) ??
+                                0),
                         ],
                       ),
                     ],

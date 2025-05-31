@@ -62,7 +62,7 @@ class HomeProvider extends ChangeNotifier {
         await DataLoader.getRequest(url: DataLoader.homePageCoursesURL);
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
-      List<dynamic> data = response.data?['courses'] ?? [];
+      List<dynamic> data = response.data?['data'] ?? [];
       courseModels = data
           .map<CourseModel>((course) => CourseModel.fromMap(course))
           .toList();

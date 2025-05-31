@@ -11,23 +11,23 @@ import 'package:GermAc/models/api_respone_model.dart';
 import 'package:http/io_client.dart';
 
 class DataLoader {
-  static String baseUrl = 'https://germ-ac.com/api';
+  static String baseUrl = 'https://staging.germ-ac.com/api';
 
-  static String homePageCoursesURL = '$baseUrl/course/home';
-  static String allCoursesURL = '$baseUrl/course';
-  static String getCourseDetailsURL = '$baseUrl/course/show';
+  static String homePageCoursesURL = '$baseUrl/courses/latest';
+  static String allCoursesURL = '$baseUrl/courses';
+  static String getCourseDetailsURL = '$baseUrl/courses';
   static String contactURL = '$baseUrl/contact';
   static String getSectionsURL = '$baseUrl/sections';
-  static String getSectionDetailsURL = '$baseUrl/section/show';
-  static String storeFeedbackURL = '$baseUrl/feedback/store';
-  static String bookMedicalTourismURL = '$baseUrl/tourism/store';
-  static String getDoctorDetailsURL = '$baseUrl/doctor/show';
+  static String getSectionDetailsURL = '$baseUrl/sections';
+  static String storeFeedbackURL = '$baseUrl/feedback';
+  static String bookMedicalTourismURL = '$baseUrl/tourism';
+  static String getDoctorDetailsURL = '$baseUrl/doctors';
   //Auth
   static String loginURL = '$baseUrl/login';
   static String registerURL = '$baseUrl/register';
   static String logoutURL = '$baseUrl/logout';
   //
-  static String getDoctorsInSectionURL = '$baseUrl/section/doctors';
+  static String getDoctorsInSectionURL = '$baseUrl/sections/doctors';
   //store conversation
   static String storeConversationURL = '$baseUrl/conversation-store';
 
@@ -35,12 +35,14 @@ class DataLoader {
   static String bookAppointmentURL = '$baseUrl/bookAppointment';
   static String convUrl = '$baseUrl/conversations';
   static String paymentUrl = '$baseUrl/bookAppointment';
-  
+  static String lang = '';
+
   static Future<ApiResponse> getRequest(
       {String? url,
       int? timeout = 30,
       Map<String, String> headers = const {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       }}) async {
     final ioc = HttpClient();
     ioc.badCertificateCallback =

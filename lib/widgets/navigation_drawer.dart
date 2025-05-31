@@ -284,8 +284,11 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                     fontFamily: "Playfair Display",
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   EasyLocalization.of(context)!.setLocale(const Locale('en'));
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.setString('locale', 'en');
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const HomePage()),
@@ -300,8 +303,11 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                     fontFamily: "Playfair Display",
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   EasyLocalization.of(context)!.setLocale(const Locale('ar'));
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.setString('locale', 'ar');
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const HomePage()),

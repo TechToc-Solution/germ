@@ -412,7 +412,7 @@
             "parentId": "fld_0bb3b4db80e643efbe9851616139ad31",
             "modified": 1692203104702,
             "created": 1691433966049,
-            "url": "http://germ-ac.com/api/course/home",
+            "url": "http://germ-ac.com/api/course",
             "name": "Top courses in home",
             "description": "",
             "method": "GET",

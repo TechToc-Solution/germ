@@ -16,9 +16,9 @@ class CoursesProvider extends ChangeNotifier {
     if (response.code == SUCCESS_CODE) {
       state = SUCCESS_STATE;
 
-      List<dynamic> data = response.data?['courses'] ?? [];
+      Map<String, dynamic> data = response.data?['data'] ?? {};
 
-      courseModels = data
+      courseModels = data['courses']
           .map<CourseModel>(
               (jsonUserModel) => CourseModel.fromMap(jsonUserModel))
           .toList();
