@@ -19,6 +19,9 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../core/network/data_loader.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'HOME';
@@ -80,41 +83,40 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                cs.CarouselSlider(
-                  options: cs.CarouselOptions(
-                    height: 150,
-                    aspectRatio: 16 / 9,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  items:
-                      context.read<HomeProvider>().sliderImagesPath.map((path) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Image.asset(
-                              path,
-                              fit: BoxFit.contain,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              height: 150,
-                            ));
-                      },
-                    );
-                  }).toList(),
-                ),
-
-                const SizedBox(
-                  height: 10,
-                ),
+                // cs.CarouselSlider(
+                //   options: cs.CarouselOptions(
+                //     height: 150,
+                //     aspectRatio: 16 / 9,
+                //     initialPage: 0,
+                //     enableInfiniteScroll: true,
+                //     reverse: false,
+                //     autoPlay: true,
+                //     autoPlayInterval: const Duration(seconds: 3),
+                //     autoPlayAnimationDuration:
+                //         const Duration(milliseconds: 800),
+                //     autoPlayCurve: Curves.fastOutSlowIn,
+                //     scrollDirection: Axis.horizontal,
+                //   ),
+                //   items:
+                //       context.read<HomeProvider>().sliderImagesPath.map((path) {
+                //     return Builder(
+                //       builder: (BuildContext context) {
+                //         return Container(
+                //             width: MediaQuery.of(context).size.width * 0.9,
+                //             margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                //             child: Image.asset(
+                //               path,
+                //               fit: BoxFit.contain,
+                //               width: MediaQuery.of(context).size.width * 0.9,
+                //               height: 150,
+                //             ));
+                //       },
+                //     );
+                //   }).toList(),
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
@@ -162,8 +164,11 @@ class _HomePageState extends State<HomePage> {
                       title: ' ${tr("Online Consultation from Germany")} ',
                       desc:
                           ' we offer you medical consultations online, and you must now select the specialty for this medical consultation by clicking on the consultation and follow-up. ',
-                      onTap: () => Navigator.of(context).push(
-                          Utils.createRoute(const OnlineConclusionsPage())),
+                      onTap: () {
+                        launchUrl(Uri.parse(DataLoader.onlineConsulution));
+                        // Navigator.of(context).push(
+                        //     Utils.createRoute(const OnlineConclusionsPage()));
+                      },
                       dimage: const DecorationImage(
                           image: AssetImage("assets/edits/1.jpg"),
                           fit: BoxFit.cover),
@@ -195,8 +200,11 @@ class _HomePageState extends State<HomePage> {
                           " ${tr("Online courses and training from Germany")} ",
                       desc:
                           ' We are team of talented doctors and We have a human side that we would like you to know ',
-                      onTap: () => Navigator.of(context)
-                          .push(Utils.createRoute(const CoursesPage())),
+                      onTap: () {
+                        launchUrl(Uri.parse(DataLoader.onlineCourses));
+                        // Navigator.of(context)
+                        //     .push(Utils.createRoute(const CoursesPage()));
+                      },
                       dimage: const DecorationImage(
                           image: AssetImage("assets/edits/2.jpg"),
                           fit: BoxFit.cover),
@@ -213,11 +221,12 @@ class _HomePageState extends State<HomePage> {
                       desc:
                           ' we provides medical tourism services to receive treatment abroad for all medical cases in the best and most prestigious universities and hospitals in the world.  ',
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const MedicalTourism();
-                          },
-                        ));
+                        launchUrl(Uri.parse(DataLoader.medicalToursim));
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) {
+                        //     return const MedicalTourism();
+                        //   },
+                        // ));
                       },
                       dimage: const DecorationImage(
                           image: AssetImage("assets/edits/3.jpg"),
@@ -234,8 +243,11 @@ class _HomePageState extends State<HomePage> {
                       title:
                           " ${tr('Developing Medical and Educational Facilities ')} ",
                       desc: '',
-                      onTap: () => Navigator.of(context)
-                          .push(Utils.createRoute(const DevelopingPage())),
+                      onTap: () {
+                        launchUrl(Uri.parse(DataLoader.developingMedical));
+                        // Navigator.of(context)
+                        //     .push(Utils.createRoute(const DevelopingPage()));
+                      },
                       dimage: const DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage("assets/edits/4.jpg")),
@@ -275,16 +287,20 @@ class _HomePageState extends State<HomePage> {
                     return Builder(
                       builder: (BuildContext context) {
                         return InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              Utils.createRoute(CourseDetails(
-                                  id: course.id,
-                                  specialization: course.section!.name))),
-                          child: TopCoursesCard(
-                            title: course.name,
-                            desc: course.description,
-                            imgPath: course.image,
-                          ),
+                          onTap: () {
+                            launchUrl(Uri.parse(
+                                "${DataLoader.courseDetail}${course.id}"));
+                          },
+                          // onTap: () => Navigator.push(
+                          //     context,
+                          //     Utils.createRoute(CourseDetails(
+                          //         id: course.id,
+                          //         specialization: course.section!.name))),
+                          // child: TopCoursesCard(
+                          //   title: course.name,
+                          //   desc: course.description,
+                          //   imgPath: course.image,
+                          // ),
                         );
                       },
                     );

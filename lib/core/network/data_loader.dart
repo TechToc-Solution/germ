@@ -37,6 +37,17 @@ class DataLoader {
   static String paymentUrl = '$baseUrl/bookAppointment';
   static String lang = '';
 
+  //web urls
+  static const String _webBaseUrl = "https://germ-ac.com";
+  static String onlineConsulution = "$_webBaseUrl/section/onlineConsulution";
+  static String onlineCourses = "$_webBaseUrl/courses";
+  static String medicalToursim = "$_webBaseUrl/medicalTourism";
+  static String developingMedical = "$_webBaseUrl/developingAndSupporting";
+  static String humanSide = "$_webBaseUrl/humanSide";
+  static String aboutUs = "$_webBaseUrl/about";
+  static String sections = "$_webBaseUrl/section";
+  static String medicalToursimWorldwide = "https://germac.trip.health";
+  static String courseDetail = "$_webBaseUrl/courses/id";
   static Future<ApiResponse> getRequest(
       {String? url,
       int? timeout = 30,

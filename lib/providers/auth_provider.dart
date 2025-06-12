@@ -20,12 +20,11 @@ class AuthProvider extends ChangeNotifier {
   Future<void> login(BuildContext context, Map<String, dynamic> body) async {
     state = LOADING_STATE;
     isLoading = true;
-
-    OneContext()
-        .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
+    // OneContext()
+    //     .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
     final res = await http.post(Uri.parse(DataLoader.loginURL), body: body);
     Map<String, dynamic> data = jsonDecode(res.body);
-    final h = data["user"];
+    final h = data["data"];
     final response =
         await DataLoader.postRequest(url: DataLoader.loginURL, body: body);
     if (response.code == SUCCESS_CODE) {
@@ -35,7 +34,7 @@ class AuthProvider extends ChangeNotifier {
       Utils.showSuccessSnackBar(context, message);
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setInt("id", h["id"]);
-      pref.setInt("roleId", h["role_id"]);
+      pref.setInt("roleId", h["roleId"] ?? 1);
       pref.setString("name", h["name"] ?? "");
       pref.setString("email", h["email"] ?? "");
       pref.setString("work", h["work"] ?? "");
@@ -56,7 +55,7 @@ class AuthProvider extends ChangeNotifier {
       );
     } else {
       state = ERROR_STATE;
-      OneContext().hideProgressIndicator();
+      // OneContext().hideProgressIndicator();
       isLoading = false;
 
       message = response.message;
@@ -70,8 +69,8 @@ class AuthProvider extends ChangeNotifier {
   Future<void> register(BuildContext context, Map<String, dynamic> body) async {
     state = LOADING_STATE;
     isLoading = true;
-    OneContext()
-        .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
+    // OneContext()
+    //     .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
     final response =
         await DataLoader.postRequest(url: DataLoader.registerURL, body: body);
     if (response.code == SUCCESS_CODE) {
@@ -88,7 +87,7 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
     } else {
       state = ERROR_STATE;
-      OneContext().hideProgressIndicator();
+      // OneContext().hideProgressIndicator();
       isLoading = false;
 
       message = response.message;

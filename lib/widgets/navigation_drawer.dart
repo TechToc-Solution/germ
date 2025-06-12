@@ -144,8 +144,9 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .push(Utils.createRoute(const OnlineConclusionsPage()));
+                  launchUrl(Uri.parse(DataLoader.onlineConsulution));
+                  // Navigator.of(context)
+                  //     .push(Utils.createRoute(const OnlineConclusionsPage()));
                 },
               ),
               ListTile(
@@ -161,8 +162,23 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .push(Utils.createRoute(const CoursesPage()));
+                  // Navigator.of(context)
+                  //     .push(Utils.createRoute(const CoursesPage()));
+                  launchUrl(Uri.parse(DataLoader.onlineCourses));
+                },
+              ),
+              ListTile(
+                // leading: const Icon(Icons.tour_outlined),
+                title: Text(
+                  tr('Medical Tourism Worldwide'),
+                  style: const TextStyle(
+                    fontFamily: "Playfair Display",
+                  ),
+                ),
+                onTap: () {
+                  launchUrl(Uri.parse(DataLoader.medicalToursimWorldwide));
+                  // Navigator.of(context)
+                  //     .push(Utils.createRoute(const MedicalTourism()));
                 },
               ),
               ListTile(
@@ -174,8 +190,9 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .push(Utils.createRoute(const MedicalTourism()));
+                  launchUrl(Uri.parse(DataLoader.medicalToursim));
+                  // Navigator.of(context)
+                  //     .push(Utils.createRoute(const MedicalTourism()));
                 },
               ),
               ListTile(
@@ -191,22 +208,24 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .push(Utils.createRoute(const DevelopingPage()));
+                  // Navigator.of(context)
+                  //     .push(Utils.createRoute(const DevelopingPage()));
+                  launchUrl(Uri.parse(DataLoader.developingMedical));
                 },
               ),
-              ListTile(
-                title: Text(
-                  tr("sections"),
-                  style: const TextStyle(
-                    fontFamily: "Playfair Display",
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(Utils.createRoute(const SectionsPage()));
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     tr("sections"),
+              //     style: const TextStyle(
+              //       fontFamily: "Playfair Display",
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     launchUrl(Uri.parse(DataLoader.sections));
+              //     // Navigator.of(context)
+              //     //     .push(Utils.createRoute(const SectionsPage()));
+              //   },
+              // ),
             ],
           ),
           ListTile(
@@ -218,11 +237,12 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
               ),
             ),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const HumanSide();
-                },
-              ));
+              launchUrl(Uri.parse(DataLoader.humanSide));
+              // Navigator.push(context, MaterialPageRoute(
+              //   builder: (context) {
+              //     return const HumanSide();
+              //   },
+              // ));
             },
           ),
           ListTile(
@@ -261,7 +281,8 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
               ),
             ),
             onTap: () {
-              Navigator.of(context).push(Utils.createRoute(const AboutUs()));
+              launchUrl(Uri.parse(DataLoader.aboutUs));
+              //Navigator.of(context).push(Utils.createRoute(const AboutUs()));
             },
           ),
           ExpansionTile(
@@ -350,38 +371,42 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
   }
 
   Future<void> logout(BuildContext context) async {
-    String responseMessage = '';
-    OneContext()
-        .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
-    final response = await DataLoader.getRequest(
-        url: DataLoader.logoutURL,
-        headers: {'Authorization': 'Bearer ${SharedClass.userToken}'});
-    if (response.code == SUCCESS_CODE) {
-      responseMessage = response.message;
-      OneContext().hideProgressIndicator();
-      Utils.showSuccessSnackBar(context, responseMessage);
-      await SharedPreferenceManager().delete();
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.remove("key");
-      pref.remove("id");
-      pref.remove("roleId");
-      pref.remove("name");
-      pref.remove("email");
-      pref.remove("work");
-      pref.remove("fcm_token");
-      pref.remove("token");
-      Navigator.pushAndRemoveUntil(
-        context,
-        Utils.createRoute(const HomePage()),
-        (route) => false,
-      );
-    } else {
-      OneContext().hideProgressIndicator();
+    //String responseMessage = '';
+    // OneContext()
+    //     .showProgressIndicator(builder: (_) => Utils.showLoadingWidget());
+    // final response =
+    //     await DataLoader.postRequest(url: DataLoader.logoutURL, headers: {
+    //   'Authorization': 'Bearer ${SharedClass.userToken}',
+    //   'Content-Type': 'application/json',
+    //   "Accept-Charset": "application/json",
+    // }, body: {});
 
-      responseMessage = response.message;
+    // if (response.code == SUCCESS_CODE) {
+    //   responseMessage = response.message;
+    //   // OneContext().hideProgressIndicator();
+    //   Utils.showSuccessSnackBar(context, responseMessage);
+    await SharedPreferenceManager().delete();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove("key");
+    pref.remove("id");
+    pref.remove("roleId");
+    pref.remove("name");
+    pref.remove("email");
+    pref.remove("work");
+    pref.remove("fcm_token");
+    pref.remove("token");
+    Navigator.pushAndRemoveUntil(
+      context,
+      Utils.createRoute(const HomePage()),
+      (route) => false,
+    );
+    // } else {
+    //   OneContext().hideProgressIndicator();
 
-      Utils.showErrorSnackBar(context, tr(responseMessage));
-    }
+    //   responseMessage = response.message;
+
+    //   Utils.showErrorSnackBar(context, tr(responseMessage));
+    // }
   }
 }
 

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:GermAc/core/network/data_loader.dart';
 import 'package:GermAc/pages/auth/ResetPasswordPage.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../core/models/shared_class.dart';
 import '../../core/ustils.dart';
 import '../../core/constant.dart';
 import 'package:http/http.dart' as http;
@@ -16,18 +19,25 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _passwordConfoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-
+  bool _showPassword = true;
   Future<void> sendResetRequest() async {
     setState(() => _isLoading = true);
     try {
       final response = await http.post(
-        Uri.parse("${DataLoader.baseUrl}/password/forgot"),
+        Uri.parse("${DataLoader.baseUrl}/password/reset"),
         headers: {"Content-Type": "application/json"},
-        body: json.encode({"email": _emailController.text.trim()}),
+        body: json.encode({
+          "email": _emailController.text.trim(),
+          "password": _passwordController.text.trim(),
+          "password_confirmation": _passwordConfoController.text.trim(),
+          "token": SharedClass.userToken,
+        }),
       );
-
+      log(response.body);
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         Utils.showSuccessSnackBar(
@@ -71,21 +81,139 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           key: _formKey,
           child: Column(
             children: [
-              Text(tr("enter_your_email"),
-                  style: const TextStyle(fontSize: 18, color: Colors.white)),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _emailController,
-                validator: (value) => value == null || value.isEmpty
-                    ? tr('please_enter_your_email')
-                    : null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tr('email'),
+                    style: const TextStyle(
+                        fontFamily: "Playfair Display",
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return tr('please_enter_your_email');
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      // hintText: 'Enter your email',
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tr('password'),
+                    style: const TextStyle(
+                      fontFamily: "Playfair Display",
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _showPassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return tr('please_enter_your_password');
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _showPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                      ),
+                      // hintText: 'Enter your password',
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tr('con_password'),
+                    style: const TextStyle(
+                      fontFamily: "Playfair Display",
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _passwordConfoController,
+                    obscureText: _showPassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return tr('please_enter_your_password');
+                      } else if (value != _passwordController.text) {
+                        return tr('check_your_password');
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _showPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                      ),
+                      // hintText: 'Enter your password',
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ],
+              ),
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
@@ -102,7 +230,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         color: Colors.white,
                       )
                     : Text(
-                        tr("send_reset_link"),
+                        tr("reset_password"),
                         style: const TextStyle(
                             fontFamily: "Playfair Display",
                             color: Colors.white,
