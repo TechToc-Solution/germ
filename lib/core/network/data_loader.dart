@@ -39,7 +39,7 @@ class DataLoader {
 
   //web urls
   static const String _webBaseUrl = "https://germ-ac.com";
-  static String onlineConsulution = "$_webBaseUrl/section/onlineConsulution";
+  static String onlineConsulution = "$_webBaseUrl/sections/onlineCosulution";
   static String onlineCourses = "$_webBaseUrl/courses";
   static String medicalToursim = "$_webBaseUrl/medicalTourism";
   static String developingMedical = "$_webBaseUrl/developingAndSupporting";

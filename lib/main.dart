@@ -15,6 +15,9 @@ import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 
+import 'core/helper/cache_helper.dart';
+import 'core/notifications_services/notifications_services.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
@@ -23,6 +26,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SharedPreferenceManager().read();
+  //await CacheHelper.init();
+  //await FirebaseApi().initNotifications();
 
   runApp(
     EasyLocalization(

@@ -28,13 +28,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
     try {
       final response = await http.post(
-        Uri.parse("${DataLoader.baseUrl}/password/reset"),
-        headers: {"Content-Type": "application/json"},
+        Uri.parse("${DataLoader.baseUrl}/password/forgot"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: json.encode({
           "email": _emailController.text.trim(),
-          "password": _passwordController.text.trim(),
-          "password_confirmation": _passwordConfoController.text.trim(),
-          "token": SharedClass.userToken,
         }),
       );
       log(response.body);
@@ -105,7 +105,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     },
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      // hintText: 'Enter your email',
+                      hintText: 'Enter your email',
                       fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
@@ -116,103 +116,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               const SizedBox(
                 height: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tr('password'),
-                    style: const TextStyle(
-                      fontFamily: "Playfair Display",
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: _showPassword,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return tr('please_enter_your_password');
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _showPassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _showPassword = !_showPassword;
-                          });
-                        },
-                      ),
-                      // hintText: 'Enter your password',
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tr('con_password'),
-                    style: const TextStyle(
-                      fontFamily: "Playfair Display",
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _passwordConfoController,
-                    obscureText: _showPassword,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return tr('please_enter_your_password');
-                      } else if (value != _passwordController.text) {
-                        return tr('check_your_password');
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _showPassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _showPassword = !_showPassword;
-                          });
-                        },
-                      ),
-                      // hintText: 'Enter your password',
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                  )
-                ],
               ),
               ElevatedButton(
                 style: ButtonStyle(
