@@ -288,6 +288,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context) {
                         return InkWell(
                           onTap: () {
+                            print("${DataLoader.courseDetail}${course.id}");
                             launchUrl(Uri.parse(
                                 "${DataLoader.courseDetail}${course.id}"));
                           },
@@ -296,11 +297,11 @@ class _HomePageState extends State<HomePage> {
                           //     Utils.createRoute(CourseDetails(
                           //         id: course.id,
                           //         specialization: course.section!.name))),
-                          // child: TopCoursesCard(
-                          //   title: course.name,
-                          //   desc: course.description,
-                          //   imgPath: course.image,
-                          // ),
+                          child: TopCoursesCard(
+                            title: course.name,
+                            desc: course.description,
+                            imgPath: course.image,
+                          ),
                         );
                       },
                     );

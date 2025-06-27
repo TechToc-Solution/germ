@@ -4,6 +4,7 @@ import 'package:GermAc/pages/auth/ForgotPasswordPage.dart';
 import 'package:GermAc/pages/auth/register.dart';
 import 'package:GermAc/providers/auth_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -172,12 +173,14 @@ class _LoginPageState extends State<LoginPage> {
                                 context, tr('the_email_is_invalid'));
                           } else {
                             _formKey.currentState!.save();
-
+                            String? fcmToken =
+                                await FirebaseMessaging.instance.getToken();
+                            print("'fcm_token': $fcmToken");
                             final body = {
                               'email': _emailController.text.trim(),
-                              'password': _passwordController.text.trim()
+                              'password': _passwordController.text.trim(),
+                              'fcm_token': fcmToken
                             };
-
                             authProvider.login(context, body);
                           }
                         }

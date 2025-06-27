@@ -27,15 +27,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     try {
       final response = await http.post(
         Uri.parse("${DataLoader.baseUrl}/password/reset"),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: json.encode({
           "email": widget.email,
           "password": _passwordController.text,
           "password_confirmation": _confirmController.text,
-          "token": _tokenController.text,
+          "code": _tokenController.text,
         }),
       );
-
+      print(response.body);
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         Utils.showSuccessSnackBar(context, tr('password_reset_success'));
@@ -73,27 +76,35 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           child: Column(
             children: [
               TextFormField(
+                style: const TextStyle(color: Colors.white),
                 controller: _tokenController,
-                decoration: InputDecoration(labelText: tr('reset_token')),
+                decoration: InputDecoration(
+                    labelText: tr('reset_code'),
+                    labelStyle: TextStyle(color: Colors.white)),
               ),
               const SizedBox(height: 10),
               TextFormField(
+                style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: tr('new_password')),
+                decoration: InputDecoration(
+                    labelText: tr('new_password'),
+                    labelStyle: const TextStyle(color: Colors.white)),
                 obscureText: true,
               ),
               const SizedBox(height: 10),
               TextFormField(
+                style: const TextStyle(color: Colors.white),
                 controller: _confirmController,
-                decoration:
-                    InputDecoration(labelText: tr('confirm_new_password')),
+                decoration: InputDecoration(
+                    labelText: tr('confirm_new_password'),
+                    labelStyle: TextStyle(color: Colors.white)),
                 obscureText: true,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.redAccent)),
+                  backgroundColor: WidgetStateProperty.all(Colors.redAccent),
+                ),
                 onPressed: _isLoading
                     ? null
                     : () {

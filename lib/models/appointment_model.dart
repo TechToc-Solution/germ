@@ -6,7 +6,7 @@ class AppointmentsModel {
   final String appointment_time;
   final String user_id;
   final String doctor_id;
-  int price = 0;
+  final int price;
 
   AppointmentsModel(
       {required this.id,
@@ -31,7 +31,7 @@ class AppointmentsModel {
         appointment_time: map['appointment_time'].toString(),
         user_id: map['user_id'].toString(),
         doctor_id: map['doctor_id'].toString(),
-        price: map["price"]);
+        price: map["price"] ?? 0);
   }
 
   String toJson() => json.encode(toMap());

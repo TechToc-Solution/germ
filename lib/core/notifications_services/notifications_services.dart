@@ -1,99 +1,138 @@
-// import 'dart:convert';
-// import 'dart:developer';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'package:GermAc/core/helper/cache_helper.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+Future<void> handleBackgroundMessage(RemoteMessage message) async {}
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   log('🔙 [Background Message] ${message.messageId}');
-// }
+class FirebaseApi {
+  final _firebaseMessaging = FirebaseMessaging.instance;
 
-// class FirebaseApi {
-//   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-//   final FlutterLocalNotificationsPlugin _localNotifications =
-//       FlutterLocalNotificationsPlugin();
+  final _androidChannel = const AndroidNotificationChannel(
+    'high_importance_channel',
+    'Highly Important Notifications',
+    description: 'This Cahnnel is used for important nots',
+    importance: Importance.max,
+  );
 
-//   final AndroidNotificationChannel _androidChannel =
-//       const AndroidNotificationChannel(
-//     'high_importance_channel',
-//     'High Importance Notifications',
-//     description: 'Used for important notifications',
-//     importance: Importance.max,
-//   );
+  final _localNotifications = FlutterLocalNotificationsPlugin();
+  void handleMessage(RemoteMessage? message) {
+    if (message == null) return;
+    log("Notification clicked with data: ${message.data}");
+    // Handle navigation or action based on message data
+  }
 
-//   Future<void> initNotifications() async {
-//     await _requestPermission();
-//     await _initLocalNotifications();
-//     await _initFirebaseMessaging();
-//   }
+  Future initLocalNotifications() async {
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const ios = DarwinInitializationSettings();
 
-//   Future<void> _requestPermission() async {
-//     NotificationSettings settings = await _firebaseMessaging.requestPermission(
-//       alert: true,
-//       badge: true,
-//       sound: true,
-//     );
+    const settings = InitializationSettings(android: android, iOS: ios);
 
-//     log('🔔 Notification permission status: ${settings.authorizationStatus}');
-//   }
+    await _localNotifications.initialize(settings);
+    final platform = _localNotifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
 
-//   Future<void> _initLocalNotifications() async {
-//     const initializationSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/ic_launcher');
-//     const initializationSettingsIOS = DarwinInitializationSettings();
-//     const initializationSettings = InitializationSettings(
-//       android: initializationSettingsAndroid,
-//       iOS: initializationSettingsIOS,
-//     );
+    await platform?.createNotificationChannel(_androidChannel);
+  }
 
-//     await _localNotifications.initialize(initializationSettings,
-//         onDidReceiveNotificationResponse: (details) {
-//       log('📱 Notification clicked with payload: ${details.payload}');
-//     });
+  Future<void> initPushNotifications() async {
+    // Request permissions for iOS
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-//     await _localNotifications
-//         .resolvePlatformSpecificImplementation<
-//             AndroidFlutterLocalNotificationsPlugin>()
-//         ?.createNotificationChannel(_androidChannel);
-//   }
+    if (settings.authorizationStatus != AuthorizationStatus.authorized) {
+      log("User declined or has not granted permissions for notifications");
+      return;
+    }
 
-//   Future<void> _initFirebaseMessaging() async {
-//     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // Display notification in foreground
+    FirebaseMessaging.onMessage.listen((message) {
+      final notification = message.notification;
+      final android = message.notification?.android;
+      if (notification != null && android != null) {
+        _localNotifications.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              _androidChannel.id,
+              _androidChannel.name,
+              channelDescription: _androidChannel.description,
+              icon: 'notification_icon',
+              importance: Importance.max,
+              priority: Priority.high,
+            ),
+          ),
+          payload: jsonEncode(message.data),
+        );
+      }
+    });
 
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       log('📩 [Foreground] Message received: ${message.notification?.title}');
-//       _showLocalNotification(message);
-//     });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      handleMessage(message);
+    });
 
-//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       log('📥 [onMessageOpenedApp] User tapped on notification: ${message.data}');
-//     });
+    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
-//     final token = await _firebaseMessaging.getToken();
-//     log("📲 FCM Token: $token");
-//   }
+    // Save the FCM token
+    await saveToken();
+  }
 
-//   void _showLocalNotification(RemoteMessage message) {
-//     final notification = message.notification;
-//     final android = notification?.android;
+  Future<void> saveToken() async {
+    final bool hasFCMToken =
+        await CacheHelper.getData(key: "hasFCMToken") ?? false;
+    log("hasFCMToken: ${hasFCMToken.toString()}");
+    final String? token = await CacheHelper.getData(key: "token");
+    log("token: ${token.toString()}");
+    if (!hasFCMToken) {
+      final String? fcmToken = Platform.isAndroid
+          ? await _firebaseMessaging.getToken()
+          : await _firebaseMessaging.getAPNSToken();
+      log("fCMToken: ${fcmToken.toString()}");
 
-//     if (notification != null && android != null) {
-//       _localNotifications.show(
-//         notification.hashCode,
-//         notification.title,
-//         notification.body,
-//         NotificationDetails(
-//           android: AndroidNotificationDetails(
-//             _androidChannel.id,
-//             _androidChannel.name,
-//             channelDescription: _androidChannel.description,
-//             icon: '@mipmap/ic_launcher',
-//             importance: Importance.max,
-//             priority: Priority.high,
-//           ),
-//         ),
-//         payload: jsonEncode(message.data),
-//       );
-//     }
-//   }
-// }
+      if (fcmToken != null) {
+        await CacheHelper.setBool(key: "hasFCMToken", value: true);
+        await CacheHelper.setString(key: "fcm_token", value: fcmToken);
+      } else {
+        log("Failed to retrieve FCM token");
+      }
+    } else {
+      final String fcmToken = CacheHelper.getData(key: 'fcm_token');
+      log("fCMToken: ${fcmToken.toString()}");
+    }
+  }
+
+  Future<void> requestNotificationPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      log("Notification permission denied");
+    } else if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      log("Notification permission granted");
+    } else {
+      log("Notification permission granted provisionally");
+    }
+  }
+
+  Future<void> initNotifications() async {
+    await requestNotificationPermission();
+    await initPushNotifications();
+    await initLocalNotifications();
+  }
+}

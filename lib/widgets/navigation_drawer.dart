@@ -101,8 +101,9 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context, Utils.createRoute(const UserProfilePage()));
+                    launchUrl(Uri.parse(DataLoader.profile));
+                    // Navigator.push(
+                    //     context, Utils.createRoute(const UserProfilePage()));
                   },
                 ),
           ListTile(

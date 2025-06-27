@@ -26,8 +26,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SharedPreferenceManager().read();
-  //await CacheHelper.init();
-  //await FirebaseApi().initNotifications();
+  await CacheHelper.init();
+  await FirebaseApi().initNotifications();
 
   runApp(
     EasyLocalization(

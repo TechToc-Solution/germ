@@ -47,7 +47,8 @@ class DataLoader {
   static String aboutUs = "$_webBaseUrl/about";
   static String sections = "$_webBaseUrl/section";
   static String medicalToursimWorldwide = "https://germac.trip.health";
-  static String courseDetail = "$_webBaseUrl/courses/id";
+  static String courseDetail = "$_webBaseUrl/courses/";
+  static String profile = "http://staging.germ-ac.com/profile";
   static Future<ApiResponse> getRequest(
       {String? url,
       int? timeout = 30,

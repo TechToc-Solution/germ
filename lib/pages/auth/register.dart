@@ -239,17 +239,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           } else {
                             _formKey.currentState!.save();
 
-                            String? fcmToken =
-                                await FirebaseMessaging.instance.getToken();
+                            // String? fcmToken =
+                            //     await FirebaseMessaging.instance.getToken();
 
-                            log(fcmToken ?? "");
+                            // log(fcmToken ?? "");
                             final body = {
                               'name': _nameController.text.trim(),
                               'email': _emailController.text.trim(),
                               'password': _passwordController.text.trim(),
                               'password_confirmation':
                                   _conPasswordController.text.trim(),
-                              'fcm_token': fcmToken
+                              // 'fcm_token': fcmToken
                             };
 
                             authProvider.register(context, body);
